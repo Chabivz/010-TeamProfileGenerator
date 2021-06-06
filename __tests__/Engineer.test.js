@@ -1,30 +1,11 @@
-class Engineer {
-    constructor(id, name, email, officeNumber) {
-      this.id = id;
-      this.name = name;
-      this.email = email;
-      this.github = github;
-      }
-  
-      getName() {
-  
-      }
-  
-      getId() {
-  
-      }
-      
-      getEmail() {
-  
-      }
-      
-      getGithub() {
-          // Returns Engineer
-          // The three classes will extend Employee
-      }
-      
-      getRole() {
-          // Returns Engineer
-          // The three classes will extend Employee
-      }
-  }
+const Employee = require("../lib/Engineer");
+
+describe("Engineer", () => {
+    it("Engineer has 'name', 'id', 'email', 'github'", () => {
+        const obj = new Employee("Chris", 10, "besttacoonline@hotmail.com", "Github");
+        expect("name" in obj).toEqual(true);
+        expect("id" in obj).toEqual(true);
+        expect("email" in obj).toEqual(true);
+        expect("github" in obj).toEqual(true);
+    })
+})
