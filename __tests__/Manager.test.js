@@ -7,5 +7,9 @@ describe("Manager", () => {
         expect("id" in obj).toEqual(true);
         expect("email" in obj).toEqual(true);
         expect("officeNumber" in obj).toEqual(true);
+        validate: val => /[a-z0-1A-Z]/gi.test(val),
+        validate: val => /^[A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+$/gi.test(val),
+        validate: val => /[a-z]/gi.test(val),
+        validate: val => /[a-z]/gi.test(val),
     })
 })
