@@ -5,6 +5,7 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const path = require('path');
 const util = require('util');
+const { Http2ServerRequest } = require("http2");
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -65,10 +66,8 @@ function addManager() {
 
 }
 
-async function generateHTML() {
- let createHTML ;
-  
-  `
+function generateHTML(team) {
+ return `
   <!DOCTYPE html>
   <html>
   <head>
@@ -86,35 +85,91 @@ async function generateHTML() {
       <div class="card-container">
       <div class="card">
         <div class="card-content">
-            <div class="card-header">
-                <!-- Name and Role -->
-                <div>Name: </div>
-                <div>Role: </div>
-              
-
-          <div class="card">
-              <div class="card-content">
-                  <div class="card-header">
-                      <!-- Name and Role -->
-                      <div>Name: </div>
-                      <div>Role: </div>
-                  </div>
-                  <div class="card-body">
-                      <!-- ID, Email, OfficeNumber/Intern/Github/  -->
-                      <div>ID</div>
-                      <div>Email</div>
-                      <div>Office Number/Github/School</div>
-                  </div>
-              </div>
-            </div>
+            
+      ${generateTeam(team)}
+   
             
       </div>
   </main>
   
   </body>
   </html>
-  `
+`
 }
+const generateTeam = (team) => { 
+
+const generateEngineerCard = (engineer) => {
+  return `
+  <div class="card">
+    <div class="card-content">
+        <div class="card-header">
+            <!-- Name and Role -->
+            <div>Name: ${engineer.getName()}</div>
+            <div>Role: Engineer</div>
+        </div>
+        <div class="card-body">
+            <div>ID ${engineer.getId()}</div>
+            <div>Email ${engineer.getGithub()}</div>
+            <div>Github ${engineer.getGithub()}</div>
+        </div>
+    </div>
+  </div>`;
+}
+
+const generateInternCard = (intern) => {
+  return `
+  <div class="card">
+    <div class="card-content">
+        <div class="card-header">
+            <!-- Name and Role -->
+            <div>Name: ${intern.getName()}</div>
+            <div>Role: Intern</div>
+        </div>
+        <div class="card-body">
+            <div>ID ${intern.getId()}</div>
+            <div>Email ${intern.getEmail()}</div>
+            <div>Github ${intern.getSchool()}</div>
+        </div>
+    </div>
+  </div>`;
+}
+
+
+  const generateManagerCard = (manager) => {
+    return `
+    <div class="card">
+      <div class="card-content">
+          <div class="card-header">
+              <!-- Name and Role -->
+              <div>Name: ${manager.getName()}</div>
+              <div>Role: Manager</div>
+          </div>
+          <div class="card-body">
+              <div>ID ${manager.getId()}</div>
+              <div>Email ${manager.getEmail()}</div>
+              <div>Github ${manager.getOfficeNumber()}</div>
+          </div>
+      </div>
+    </div>`;
+  }
+
+const HTMLArray = [];
+team.forEach(teamMate =>  {
+const teammateRole = teamMate.getRole();
+  switch (teammateRole) {
+    case "Manager":
+      return HTMLArray.push(generateManagerCard(teamMate))
+    case "Intern":
+      return HTMLArray.push(generateInternCard(teamMate))
+    default:
+      return HTMLArray.push(generateEngineerCard(teamMate));
+    
+
+  }
+});
+
+}
+
 
 
 function addEngineer() {
@@ -146,6 +201,8 @@ function addEngineer() {
         teamArray.push(engineer);
         xRoads();
     }) 
+
+
 
 }
 
@@ -218,21 +275,24 @@ async function FetchArray() {
       console.log(`Name: ${element.name}`);
       console.log(`ID: ${element.id}`);
       console.log(`Email: ${element.email}`);
-
+      let roleInfo = ""
       if (element.officeNumber) {
         console.log(`Office Number: ${element.officeNumber}`);
+        roleInfo = "Manager";
       } else if (element.school) {
         console.log(`School: ${element.school}`)
+        roleInfo = "Intern";
       } else if (element.github) {
         console.log(`Github: ${element.github}`)
+        roleInfo = "Engineer";
       } else {
         console.log("Employee")
       }
-        
     });
   } catch (err) {
     console.log(err);
   }
+
 }
 
 
@@ -243,4 +303,9 @@ function init() {
     .catch((err) => console.error(err));
 }
 
+
+
 addManager()
+
+
+// 
