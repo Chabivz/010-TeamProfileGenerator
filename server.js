@@ -5,7 +5,6 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const path = require('path');
 const util = require('util');
-const { Http2ServerRequest } = require("http2");
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -30,39 +29,18 @@ const teamArray = [
   },
 ];
 
-function addManager() {
-    inquirer.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'What is the manager\`s name? ',
-               
-        },
-        {
-        type: 'input',
-        name: 'id',
-        message: 'What is the manager\'s id? ',
-        
-        },
-        {
-        type: 'input',
-        name: 'email',
-        message: 'What is the manager\'s email? ',
-        
-        },
-        {
-          type: 'input',
-          name: 'officeNumber',
-          message: 'What is the manager\'s office number? ',
-          
-        }
-        
-    ])
-    .then(res => {
-        const manager = new Manager(res.name, res.id, res.email, res.officeNumber);
-        teamArray.push(manager);
-        xRoads();
-    }) 
+
+const indexHTML = (teamArray) => {
+
+  const empCards = generateTeam(teamArray)
+  
+  
+  fs.writeFileAsync('index.html', generateHTML(empCards), err => {
+    if (err) throw err;
+    console.log('Success');
+  });
+
+
 
 }
 
@@ -96,7 +74,8 @@ function generateHTML(team) {
   </html>
 `
 }
-const generateTeam = (team) => { 
+
+const generateTeam = async (team) => { 
 
 const generateEngineerCard = (engineer) => {
   return `
@@ -154,15 +133,15 @@ const generateInternCard = (intern) => {
   }
 
 const HTMLArray = [];
-team.forEach(teamMate =>  {
-const teammateRole = teamMate.getRole();
+team.forEach(element =>  {
+const teammateRole = element.getRole();
   switch (teammateRole) {
     case "Manager":
-      return HTMLArray.push(generateManagerCard(teamMate))
+      return HTMLArray.push(generateManagerCard(element))
     case "Intern":
-      return HTMLArray.push(generateInternCard(teamMate))
+      return HTMLArray.push(generateInternCard(element))
     default:
-      return HTMLArray.push(generateEngineerCard(teamMate));
+      return HTMLArray.push(generateEngineerCard(element));
     
 
   }
@@ -171,6 +150,41 @@ const teammateRole = teamMate.getRole();
 }
 
 
+function addManager() {
+  inquirer.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the manager\`s name? ',
+             
+      },
+      {
+      type: 'input',
+      name: 'id',
+      message: 'What is the manager\'s id? ',
+      
+      },
+      {
+      type: 'input',
+      name: 'email',
+      message: 'What is the manager\'s email? ',
+      
+      },
+      {
+        type: 'input',
+        name: 'officeNumber',
+        message: 'What is the manager\'s office number? ',
+        
+      }
+      
+  ])
+  .then(res => {
+      const manager = new Manager(res.name, res.id, res.email, res.officeNumber);
+      teamArray.push(manager);
+      xRoads();
+  }) 
+
+}
 
 function addEngineer() {
     inquirer.prompt([
@@ -201,8 +215,6 @@ function addEngineer() {
         teamArray.push(engineer);
         xRoads();
     }) 
-
-
 
 }
 
@@ -262,50 +274,16 @@ function xRoads() {
                 case 'Intern':
                   return addIntern();
                 default:
-                  return FetchArray();
+                  return generateHTML(teamArray);
               }
         }) 
 }
 
 
-async function FetchArray() {
-  try {
-    teamArray.forEach(element => {
-      
-      console.log(`Name: ${element.name}`);
-      console.log(`ID: ${element.id}`);
-      console.log(`Email: ${element.email}`);
-      let roleInfo = ""
-      if (element.officeNumber) {
-        console.log(`Office Number: ${element.officeNumber}`);
-        roleInfo = "Manager";
-      } else if (element.school) {
-        console.log(`School: ${element.school}`)
-        roleInfo = "Intern";
-      } else if (element.github) {
-        console.log(`Github: ${element.github}`)
-        roleInfo = "Engineer";
-      } else {
-        console.log("Employee")
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
-
-}
-
-
 function init() {
   addManager()
-    .then((answers) => writeFileAsync('index.html', generateHTML(answers)))
-    .then(() => console.log('Successfully wrote to index.html'))
-    .catch((err) => console.error(err));
+
 }
 
-
-
-addManager()
-
-
+init()
 // 
