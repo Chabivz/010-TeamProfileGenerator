@@ -1,12 +1,29 @@
-const Employee = require("../lib/Intern");
-
-describe("Intern", () => {
-    it("Should return object containing a 'name', 'id' 'email' and 'School' property when added new object", () => {
-        const obj = new Employee("Chris", 10, "besttacoonline@hotmail.com", "School");
-        expect("name" in obj).toEqual(true);
-        expect("id" in obj).toEqual(true);
-        expect("email" in obj).toEqual(true);
-        expect("school" in obj).toEqual(true);
-    })
+const Intern = require("../lib/Intern");
+const { expectToBe, expectString, expectNum } = require('../utils/testHelper');
+describe("intern should have the following...", () => {
+    const intern = new Intern('Dwayne Johnson', 30, 'DwayneJohnson@TheRock.com', 'WWE');
     
+    test('create an intern object', () => {
+        expectToBe(intern.name, 'Dwayne Johnson');
+        expectNum(intern.id);
+        expectToBe(intern.email, 'DwayneJohnson@TheRock.com');
+        expectToBe(intern.school, 'WWE');
+         
+    });
+
+    test('Get intern name ', () => {
+        expectString(intern.getName(), intern.name);
+    });
+
+    test('Get intern new id ', () => {
+        expectNum(intern.getId(), `${intern.id}`);
+    });
+    
+    test('Get intern new email ', () => {
+        expectString(intern.getEmail(), intern.email);
+    });
+
+    test('Get intern new school ', () => {
+    expectString(intern.getSchool(), intern.school);
+    });
 })

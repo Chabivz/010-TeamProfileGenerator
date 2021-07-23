@@ -1,15 +1,29 @@
-const Employee = require("../lib/Manager");
+const Manager = require("../lib/Manager");
+const { expectToBe, expectString, expectNum } = require('../utils/testHelper');
+describe("manager should have the following...", () => {
+    const manager = new Manager('John Cena', 50, 'JohnCena@cantsee.me', 1);
+    
+    test('create an manager object', () => {
+        expectToBe(manager.name, 'John Cena');
+        expectNum(manager.id);
+        expectToBe(manager.email, 'JohnCena@cantsee.me');
+        expectNum(manager.officeNumber);
+         
+    });
 
-describe("Manager", () => {
-    it("Should return object containing a 'name', 'id' 'email' and 'officeNumber' property when added new object", () => {
-        const obj = new Employee("Chris", 10, "besttacoonline@hotmail.com");
-        expect("name" in obj).toEqual(true);
-        expect("id" in obj).toEqual(true);
-        expect("email" in obj).toEqual(true);
-        expect("officeNumber" in obj).toEqual(true);
-        validate: val => /[a-z0-1A-Z]/gi.test(val);
-        validate: val => /^[A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+$/gi.test(val);
-        validate: val => /[a-z]/gi.test(val);
-        validate: val => /[a-z]/gi.test(val);
-    })
+    test('Get manager name ', () => {
+        expectString(manager.getName(), manager.name);
+    });
+
+    test('Get manager new id ', () => {
+        expectNum(manager.getId(), `${manager.id}`);
+    });
+    
+    test('Get manager new email ', () => {
+        expectString(manager.getEmail(), manager.email);
+    });
+
+    test('Get manager new officeNumber ', () => {
+    expectNum(manager.getOfficeNumber(), manager.officeNumber);
+    });
 })

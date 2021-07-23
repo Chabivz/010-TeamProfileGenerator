@@ -8,26 +8,27 @@ const util = require('util');
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
-const teamArray = [
-  {
-    name: "Chris",
-    id: 01,
-    email: "chrisabiva@hotmail.com",
-    officeNumber: 10,
-  },
-  {
-    name: "Bee",
-    id: 02,
-    email: "Bee@hotmail.com",
-    school: "University of Washington",
-  },
-  {
-    name: "Axis",
-    id: 03,
-    email: "Axis@hotmail.com",
-    github: "Axiiiis",
-  },
-];
+const teamArray = [];
+// const teamArray = [
+//   {
+//     name: "Chris",
+//     id: 01,
+//     email: "chrisabiva@hotmail.com",
+//     officeNumber: 10,
+//   },
+//   {
+//     name: "Bee",
+//     id: 02,
+//     email: "Bee@hotmail.com",
+//     school: "University of Washington",
+//   },
+//   {
+//     name: "Axis",
+//     id: 03,
+//     email: "Axis@hotmail.com",
+//     github: "Axiiiis",
+//   },
+// ];
 
 
 const indexHTML = (teamArray) => {
@@ -35,7 +36,7 @@ const indexHTML = (teamArray) => {
   const empCards = generateTeam(teamArray)
   
   
-  fs.writeFileAsync('index.html', generateHTML(empCards), err => {
+  fs.writeFileAsync('./dist/index.html', generateHTML(empCards), err => {
     if (err) throw err;
     console.log('Success');
   });
@@ -133,21 +134,23 @@ const generateInternCard = (intern) => {
   }
 
 const HTMLArray = [];
-team.forEach(element =>  {
-const teammateRole = element.getRole();
-  switch (teammateRole) {
-    case "Manager":
-      return HTMLArray.push(generateManagerCard(element))
-    case "Intern":
-      return HTMLArray.push(generateInternCard(element))
-    default:
-      return HTMLArray.push(generateEngineerCard(element));
+console.log(team);
+// team.forEach(element =>  {
+// let teammateRole = element.getRole();
+//   switch (teammateRole) {
+//     case "Manager":
+//       return HTMLArray.push(generateManagerCard(element))
+//     case "Intern":
+//       return HTMLArray.push(generateInternCard(element))
+//     default:
+//       return HTMLArray.push(generateEngineerCard(element));
     
 
-  }
-});
+//   }
+// });
 
 }
+
 
 
 function addManager() {

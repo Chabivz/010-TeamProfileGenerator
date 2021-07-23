@@ -1,11 +1,24 @@
 const Employee = require("../lib/Employee");
+const { expectToBe, expectString, expectNum } = require('../utils/testHelper');
+describe("employee should have the following...", () => {
+    const employee = new Employee('Undertaker', 999, 'Helena@MCR.me');
+    
+    test('create an employee object', () => {
+        expectToBe(employee.name, 'Undertaker');
+        expectNum(employee.id);
+        expectToBe(employee.email, 'Helena@MCR.me');
+         
+    });
 
-describe("Manager", () => {
-    it("Has an Office Number", () => {
-        const obj = new Employee("Chris", 10, "besttacoonline@hotmail.com");
-        expect("name" in obj).toEqual(true);
-        expect("id" in obj).toEqual(true);
-        expect("email" in obj).toEqual(true);
-        expect("officeNumber" in obj).toEqual(true);
-    })
+    test('Get employee name ', () => {
+        expectString(employee.getName(), employee.name);
+    });
+
+    test('Get employee new id ', () => {
+        expectNum(employee.getId(), `${employee.id}`);
+    });
+    
+    test('Get employee new email ', () => {
+        expectString(employee.getEmail(), employee.email);
+    });
 })
