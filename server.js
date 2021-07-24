@@ -31,12 +31,12 @@ const teamArray = [];
 // ];
 
 
-const indexHTML = (teamArray) => {
+const indexHTML = async (teamArray) => {
 
   const empCards = generateTeam(teamArray)
   
   
-  fs.writeFileAsync('./dist/index.html', generateHTML(empCards), err => {
+  fs.writeFileAsync('./dist/index.html', await generateHTML(empCards), err => {
     if (err) throw err;
     console.log('Success');
   });
@@ -89,7 +89,7 @@ const generateEngineerCard = (engineer) => {
         </div>
         <div class="card-body">
             <div>ID ${engineer.getId()}</div>
-            <div>Email ${engineer.getGithub()}</div>
+            <div>Email ${engineer.getEmail()}</div>
             <div>Github ${engineer.getGithub()}</div>
         </div>
     </div>
@@ -134,21 +134,24 @@ const generateInternCard = (intern) => {
   }
 
 const HTMLArray = [];
-console.log(team);
-// team.forEach(element =>  {
-// let teammateRole = element.getRole();
-//   switch (teammateRole) {
-//     case "Manager":
-//       return HTMLArray.push(generateManagerCard(element))
-//     case "Intern":
-//       return HTMLArray.push(generateInternCard(element))
-//     default:
-//       return HTMLArray.push(generateEngineerCard(element));
+team.forEach(element =>  {
+  console.log(`Console LOG element.getRole() ${element.getRole()}`);
+let { teammateRole } = element.getRole();
+  switch (teammateRole) {
+    case "Manager":
+      return HTMLArray.push(generateManagerCard(element));
+    case "Engineer":
+      console.log(element);
+      return HTMLArray.push(generateEngineerCard(element));
+    default:
+      return HTMLArray.push(generateInternCard(element));
+    
+      
     
 
-//   }
-// });
-
+  }
+});
+console.log(teammateRole)
 }
 
 
