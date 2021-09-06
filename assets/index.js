@@ -31,4 +31,4 @@ const DisplayArray = async () => {
   
   }
   
-  // DisplayArray()
+  DisplayArray();
