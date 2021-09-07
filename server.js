@@ -4,7 +4,6 @@ const Engineer = require("./lib/Engineer");
 const fs = require("fs");
 const inquirer = require("inquirer");
 const path = require("path");
-const util = require("util");
 const fileDirectory = path.resolve(__dirname, "dist");
 const filePath = path.join(fileDirectory, "index.html");
 
