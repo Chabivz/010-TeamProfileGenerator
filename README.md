@@ -47,7 +47,7 @@ A Node.js command-line application that takes in information about employees on 
 
 |Youtube Walkthrough|
 |---|
-[![Team Profile Generator Walk Through](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=7X6k_zpWhfc)
+[![Team Profile Generator Walk Through](https://play-lh.googleusercontent.com/vA4tG0v4aasE7oIvRIvTkOYTwom07DfqHdUPr6k7jmrDwy_qA_SonqZkw6KX0OXKAdk)](https://www.youtube.com/watch?v=7X6k_zpWhfc)
 
 
 ## Question
